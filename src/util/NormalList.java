@@ -2,12 +2,14 @@ package util;
 
 public class NormalList<T> {
     private ListNode firstNode;
+    private ListNode lastNode;
     private int size;
 
     public NormalList(){}
 
     public NormalList(ListNode<T> node){
         this.firstNode = node;
+        this.lastNode = node;
         this.size = 1;
     }
 
@@ -19,20 +21,45 @@ public class NormalList<T> {
 
     public NormalList(T ele){
         this.firstNode=new ListNode(ele);
+        this.lastNode=this.firstNode;
+        this.size=1;
+    }
+
+    public static NormalList<Integer> makeConvenientList(int[] datas){
+        ListNode<Integer> item;
+        NormalList<Integer> targetList=new NormalList<>();
+        for(int i=0; i<datas.length; i++){
+            item = new ListNode<>(datas[i]);
+            targetList.add(item);
+        }
+        return targetList;
     }
 
     public ListNode getFirstNode() {
         return firstNode;
     }
 
-    public void add(ListNode newNode){
-        ListNode tempNode = firstNode;
-        ListNode tempPreNode = tempNode;
-        while(tempNode!=null){
-            tempPreNode = tempNode;
-            tempNode = tempNode.next;
+    public void setFirstNode(ListNode firstNode){
+        this.firstNode = firstNode;
+    }
+
+    public ListNode getLastNode() {
+        return lastNode;
+    }
+
+    public void setLastNode(ListNode lastNode) {
+        this.lastNode = lastNode;
+    }
+
+    public void add(ListNode newNode){//设置一个尾节点方便多了，快多了
+        if(firstNode==null) {
+            firstNode = newNode;
+            lastNode = newNode;
+            size++;
+            return;
         }
-        tempPreNode.next = newNode;
+        lastNode.next = newNode;
+        lastNode = newNode;
         size++;
     }
 
@@ -65,10 +92,11 @@ public class NormalList<T> {
         return tempNode;
     }
 
-    public boolean insertNode(int index, ListNode newNode){
+    public boolean insertNode(int index, ListNode newNode){//这个insert有点问题，需要改一下，同时把尾节点换做add方法
         if(index<0 || index>size){
             return false;
         }
+
         int j=0;
         ListNode tempNode = firstNode;
         ListNode tempPreNode = firstNode;
