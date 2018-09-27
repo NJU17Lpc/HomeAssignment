@@ -25,6 +25,10 @@ public class NormalList<T> {
         this.size=1;
     }
 
+    public int getSize(){
+        return this.size;
+    }
+
     public static NormalList<Integer> makeConvenientList(int[] datas){
         ListNode<Integer> item;
         NormalList<Integer> targetList=new NormalList<>();
@@ -35,7 +39,7 @@ public class NormalList<T> {
         return targetList;
     }
 
-    public ListNode getFirstNode() {
+    public ListNode<T> getFirstNode() {
         return firstNode;
     }
 
