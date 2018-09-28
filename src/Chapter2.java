@@ -114,11 +114,3 @@ public class Chapter2 {
         return list;
     }
 }
-
-class Node<T> {
-    T data;
-    Node pre;
-    Node next;
-    Node(T data){this.data=data;}
-    Node(){}
-}

@@ -1,6 +1,16 @@
 import java.util.LinkedList;
 
+/**
+ * 该章节主要为递归解题
+ */
 public class Chapter1 {
+    /**
+     * Write a recursive method that returns the number of 1’s in the binary
+     representation of N. Use the fact that is equal to the number of 1’s in the
+     representation of N/2, plus 1, if N is odd
+     * @param num
+     * @return
+     */
     public static int count_of_one (int num){
         if(num==0)
             return 0;
@@ -8,6 +18,16 @@ public class Chapter1 {
             return count_of_one(num/2)+num%2;
     }
 
+    /**
+     * Write the routines wise the following declarations:
+     public void permute( String str );
+     private void permute( char [ ] str, int low, int high )
+     The first routine is a driver that calls the second and prints all the
+     permutations of the characters in String str.
+     If str is “abc”, then the strings that are output are abc, acb, bac, bca, cab,and cba.
+     Use recursion for the second routine.
+     * @param str
+     */
     public void permute(String str){
         char[] temp = str.toCharArray();
         permute(temp, 0, temp.length-1);
@@ -33,7 +53,13 @@ public class Chapter1 {
         str[b] = temp;
     }
 
-
+    /**
+     * 已知a[n]为整型数组，试写出实现下列运算的递归算法。
+     1）求数组a中的最大整数。
+     2）求n个整数的平均值。
+     * @param a
+     * @return
+     */
     public static int maxNum(int[] a){
         int max;
         if(a.length==0)
@@ -68,6 +94,11 @@ public class Chapter1 {
         }
     }
 
+    /**
+     * Write a recursive method that calculates and returns the length of a linked list.
+     * @param listNode
+     * @return
+     */
     public static int length_of_list(LinklistNode listNode){
         if(listNode==null)
             return 0;
@@ -75,6 +106,14 @@ public class Chapter1 {
             return length_of_list(listNode.next)+1;
     }
 
+    /**
+     * Check recursively if the following objects are palindromes:
+     a.  A word
+     b. a sentence ( ignoring blanks, lower- and uppercase differences, and punctuation marks
+     so that “Madam, I’m Adam” is accepted as a palindrome)
+     * @param word
+     * @return
+     */
     public static boolean wordPalindromes(String word){
         if(word.equals(""))
             return true;
@@ -126,7 +165,33 @@ public class Chapter1 {
         Chapter1.HanoiTower(3,'A','B','C');
     }
 
+    /**
+     * 找出从自然数 1, 2, …, n 中任取r个数的所有组合, 编一个递归算法.
+     例子:  n = 5     1  2  3  4  5
+     r = 3               5  4  3
+                         5  4  2
+                         5  4  1
+                         5  3  2
+                         5  3  1
+                         5  2  1
+                         4  3  2
+                         4  3  1
+                         4  2  1
+                         3  2  1
 
+     理解 ： 默认高位在前，因为取r个，所以第一位最小为r
+     初始状态  n个里选r个   减而治之   n-1个里选r-1个
+             最小为1个里选1个
+
+     n个里选r个  需要输出r位，传输r位数组  最高位可以有r到n几个选择，外部使用迭代
+     n-1个里选r-1个  需要输出r-1位，传输r-1位数组  最高位可以有r-1到n-1几个选择，外部使用迭代
+
+     1个里选1个  需要输出1位，传输1位数组  最高位为1个选择。程序到最小规模，输出
+
+     其中每个下一步问题的规模依赖于上一步迭代的次数
+     * @param n
+     * @param r
+     */
     //对于n中取r个元素，每一次递归将问题规模缩小成在n-1中取r-1个元素
     public static void combina_r_from_n(int n, int r){
         int[] a = new int[r];
@@ -150,7 +215,13 @@ public class Chapter1 {
     }
 
 
-
+    /**
+     * 实现Hanoi塔
+     * @param n
+     * @param fromTower
+     * @param middleTower
+     * @param toTower
+     */
     /*
     这个问题本来是感觉参数变化太诡异，一直不懂
     下面思路： A   B   C   n在A上，要移动到C上
@@ -192,11 +263,7 @@ public class Chapter1 {
             System.out.println("把 块"+n+" 从 塔"+fromTower+" 放到 塔"+toTower+" 上");
             HanoiTower(n-1, middleTower, fromTower, toTower);
         }
-
-
     }
-
-
 }
 
 class LinklistNode {
