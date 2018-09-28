@@ -8,9 +8,10 @@ public class Chapter3P1Test {
     }
 
     public void expression_evaluationTest(){
-        System.out.println(ex.expression_evaluation("1 * ( 12 + 3 ) * 4"));
         System.out.println(ex.expression_evaluation("1 * 2 + 3 * 4"));
         System.out.println(ex.expression_evaluation("1 * 3 * 4"));
+        System.out.println(ex.expression_evaluation("3 + ( 2 - 5 ) * 6 / 3"));
+        System.out.println(ex.expression_evaluation("3 + ( 6 - 4 / 2 ) * 5"));
     }
 
 

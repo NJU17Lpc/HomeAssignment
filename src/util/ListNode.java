@@ -2,8 +2,8 @@ package util;
 
 public class ListNode<T> {
     private T data;
-    public ListNode next;
-    public ListNode pre;
+    public ListNode<T> next;
+    public ListNode<T> pre;
     public T getData() {
         return data;
     }
