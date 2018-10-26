@@ -1,5 +1,8 @@
 package util;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 public class BinarySearchTree <T extends Comparable<? super T>>{
 
     private BinaryNode<T> root;
@@ -36,6 +39,12 @@ public class BinarySearchTree <T extends Comparable<? super T>>{
         root = insert(x, root); //private方法中最后刚好返回根节点
     }
 
+    public void insert(T[] list){
+        for(T x:list){
+            insert(x);
+        }
+    }
+
     public BinaryNode<T> remove(T x){
         return remove(x, root);
     }
@@ -46,6 +55,62 @@ public class BinarySearchTree <T extends Comparable<? super T>>{
         else
             printTree(root);
     }
+
+    public boolean isBST(){
+        return isBST(root);
+    }
+
+    /**
+     * 先获取树的中缀表示（getInOrderBSTNodeList），然后用迭代器按次序比较是否符合顺序
+     * @param root
+     * @return
+     */
+    private boolean isBST(BinaryNode root){
+        if(root==null)
+            return true;
+        ArrayList<BinaryNode<T>> list = new ArrayList<>();
+         list = getInOrderBSTNodeList(root, list);
+        Iterator<BinaryNode<T>> itr = list.iterator();
+        BinaryNode<T> pre = itr.next();
+        BinaryNode<T> cur ;
+        while(itr.hasNext()){
+            cur = itr.next();
+            if(pre.data.compareTo(cur.data)>0)
+                return false;
+            pre = cur;
+        }
+        return true;
+    }
+
+    private ArrayList<BinaryNode<T>> getInOrderBSTNodeList(BinaryNode<T> root, ArrayList<BinaryNode<T>> list){
+        if(root.left!=null)
+            list = getInOrderBSTNodeList(root.left, list);
+        list.add(root);
+        if(root.right!=null)
+            list = getInOrderBSTNodeList(root.right, list);
+        return list;
+
+    }
+
+    /**
+     * 判断树是否为二叉搜索树的另一种解法
+     * 判定方法：左子树的最大节点小于根，右子树的最小节点大于根
+     * 需要调用之前的private findMax 和findMin方法
+     * @param root
+     * @return
+     */
+    private boolean isBST_1(BinaryNode<T> root){
+        if(root==null)
+            return true;
+        if(root.left!=null && findMax(root.left).data.compareTo(root.data)>0)//保证有序性
+            return false;
+        if(root.right!=null && findMin(root.right).data.compareTo(root.data)<0)//保证有序性
+            return false;
+        if(!isBST_1(root.left)||!isBST_1(root.right))//一旦左子树或者右子树不满足BST的条件，就返回错误。这里是递归部分
+            return false;
+        return true;
+    }
+
     private void printTree(BinaryNode<T> t){
         if(t==null)
             return;
@@ -110,6 +175,15 @@ public class BinarySearchTree <T extends Comparable<? super T>>{
         else
             t = (t.left!=null)?t.left:t.right;
         return t;
+    }
+
+    public static void main(String[] args){
+        BinarySearchTree<Integer> tree = new BinarySearchTree<>();
+        Integer[] testData = new Integer[]{66,4,10,5,6,7};
+        tree.insert(testData);
+        tree.printTree();
+        System.out.println(tree.isBST());
+        System.out.println(tree.isBST_1(tree.root));
     }
 }
 
